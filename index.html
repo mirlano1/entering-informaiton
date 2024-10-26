@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع ملون</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        label {
+            display: block; /* جعل كل خانة في سطر */
+            margin-top: 10px;
+            text-align: right; /* جعل النص على اليمين */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%; /* جعل عرض الحقل 100% */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #ff4c4c; /* اللون الأحمر */
+            color: white;
+            padding: 15px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff1a1a; /* لون أفتح عند التحويم */
+        }
+
+        #thankYouMessage {
+            display: none;
+            margin-top: 20px;
+            color: green;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مرحبًا بكم في موقعي!</h1>
+        <p>يرجى ملء النموذج أدناه:</p>
+        
+        <form action="https://formsubmit.co/mirlanalmardiny@gmail.com" method="POST" id="registrationForm">
+            <input type="hidden" name="_captcha" value="false">
+
+            <label for="name">الاسم:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="age">العمر:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">إرسال</button>
+        </form>
+
+        <div id="thankYouMessage">شكرًا لإرسالك هذه البيانات!</div>
+    </div>
+
+    <script>
+        // إظهار رسالة الشكر بعد الإرسال
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            // منع الإرسال الافتراضي للنموذج
+            event.preventDefault();
+            
+            // إرسال البيانات عبر AJAX باستخدام Fetch API
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // إخفاء النموذج
+                    this.style.display = 'none';
+                    // إظهار رسالة الشكر
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                } else {
+                    alert('فشل إرسال النموذج.');
+                }
+            })
+            .catch(error => {
+                console.error('فشل إرسال النموذج:', error);
+                alert('فشل إرسال النموذج.');
+            });
+        });
+    </script>
+</body>
+</html>
